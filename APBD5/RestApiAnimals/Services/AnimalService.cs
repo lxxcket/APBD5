@@ -33,6 +33,7 @@ public class AnimalService : IAnimalService
 
     public int DeleteAnimal(int animalId)
     {
+        
         return _animalRepository.DeleteAnimal(animalId);
     }
 }

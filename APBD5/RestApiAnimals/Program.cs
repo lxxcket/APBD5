@@ -12,7 +12,7 @@ public class Program
         builder.Services.AddSwaggerGen();
         builder.Services.AddControllers();
         builder.Services.AddScoped<IAnimalService, AnimalService>();
-        builder.Services.AddScoped<IAnimalRepository, AnimalRepository>();
+        builder.Services.AddSingleton<IAnimalRepository,AnimalRepository>();
 
         var app = builder.Build();
 

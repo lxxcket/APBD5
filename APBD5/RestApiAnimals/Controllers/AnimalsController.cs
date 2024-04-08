@@ -26,6 +26,11 @@ public class AnimalsController : ControllerBase
     public IActionResult GetAnimal(int id)
     {
         var animal = _animalService.GetAnimal(id);
+        if (animal == null)
+        {
+            return StatusCode(StatusCodes.Status404NotFound);
+        }
+
         return Ok(animal);
     }
 
@@ -39,15 +44,24 @@ public class AnimalsController : ControllerBase
     [HttpDelete("{id:int}")]
     public IActionResult DeleteAnimal(int id)
     {
-        _animalService.DeleteAnimal(id);
-        return NoContent();
+        int status = _animalService.DeleteAnimal(id);
+        if (status == 1)
+        {
+            return NoContent();
+        }
+        return StatusCode(StatusCodes.Status404NotFound);
     }
 
     [HttpPut]
     public IActionResult UpdateAnimal(Animal animal)
     {
-        _animalService.UpdateAnimal(animal);
-        return Ok();
+       int status = _animalService.UpdateAnimal(animal);
+       if (status == 1)
+       {
+           return Ok();
+       }
+
+       return StatusCode(StatusCodes.Status404NotFound);
     }
     
 }
