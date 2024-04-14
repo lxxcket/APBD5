@@ -1,3 +1,4 @@
+using RestApiAnimals.Exceptions;
 using RestApiAnimals.Models;
 using RestApiAnimals.Repositories;
 
@@ -23,6 +24,14 @@ public class AnimalService : IAnimalService
 
     public int CreateAnimal(Animal animal)
     {
+        var enumerable = _animalRepository.GetAnimals();
+        foreach (var an in enumerable)
+        {
+            if (an.IdAnimal == animal.IdAnimal)
+            {
+                throw new NonUniqueIdException();
+            }
+        }
         return _animalRepository.CreateAnimal(animal);
     }
 

@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using RestApiAnimals.Exceptions;
 using RestApiAnimals.Models;
 using RestApiAnimals.Services;
 
@@ -37,8 +38,16 @@ public class AnimalsController : ControllerBase
     [HttpPost]
     public IActionResult CreateAnimal(Animal animal)
     {
-        _animalService.CreateAnimal(animal);
-        return StatusCode(StatusCodes.Status201Created);
+        try
+        {
+            _animalService.CreateAnimal(animal);
+            return StatusCode(StatusCodes.Status201Created);
+        }
+        catch (NonUniqueIdException e)
+        {
+            return StatusCode(StatusCodes.Status400BadRequest);
+        }
+        
     }
 
     [HttpDelete("{id:int}")]
